@@ -1,74 +1,97 @@
+
 import { Temporal } from "@js-temporal/polyfill";
-import { Student, isStudent, parseStudent } from "./models/student.model";
-import { AssessmentItem, calculateGrade } from "./models/assessment.model";
-import {
-  describeEnrollment,
-  EnrollmentStatus,
-} from "./models/enrollment.model";
-import { Course, CourseStatus, describeCourse } from "./models/course.model";
+ import { Student,isStudent } from "./models/stidemt_model";
+ import { parseStudent } from "./models/stidemt_model";
+ import { AssessmentItem,calculateGrade } from "./models/assessment.mode";
+ import { EnrollmentStatus,describeEnrollment } from "./models/enrollment_model";
+ import { CourseStatus, describeCourse } from "./models/course_model";
 
-const student: Student = {
-  id: "STU-001",
-  name: "Hana Tadesse",
-  enrollmentDate: Temporal.Now.instant(),
-};
-// Try these what does the compiler say?
-// student.id = "STU-999";
-console.log(student.id);
+ const student: Student = {
+    id: "STU-001",
+    name:"Hana Tadesse",
+    enrollmentDate:Temporal.Now.instant(),
+ };
+
+//student.id = "STU-999";
 console.log(student.gpa?.toFixed(2));
-console.log(student.gpa?.toFixed(2) ?? "Not yet graded");
+console.log(student.gpa?.toFixed(2) ?? "Not Yet graded");
 
-function processStudent(raw: unknown) {
-  if (isStudent(raw)) {
+function processStudent(raw: unknown)
+{
+    if(isStudent(raw))
+    {
     const gpaDisplay = raw.gpa?.toFixed(2) ?? "Not yet graded";
     console.log(`Student ${raw.name} GPA: ${gpaDisplay}`);
-  } else {
-    console.error("Invalid student data received");
-  }
+    }
+    else
+    {
+        console.error("invalid student data received");
+    }
 }
 
-// processStudent({ id: "STU-001", name: "Hana", gpa: 3.7 });
+// processStudent({id:"STU-001",name:"Hana",gpa:3.7});
 
 // processStudent(42);
 
-// console.log(parseStudent({ id: "STU-001", name: "Hana" }));
+//  console.log(parseStudent({id:"STU-001",name:"Hana"}));
 
-// parseStudent({ id: 42, name: "Test" });
+// parseStudent({id:42,name:"Test"});
+
+
+
 
 const quiz: AssessmentItem = {
-  id: "QUIZ-001",
-  kind: "quiz",
-  title: "SQL Basics",
-  correctAnswers: 8,
-  totalQuestions: 10,
+id: "QUIZ-001",
+kind: "quiz",
+title: "SQL Basics",
+correctAnswer: 8,
+totalQuestions: 10,
 };
-
 const lab: AssessmentItem = {
-  id: "LAB-001",
-  kind: "lab",
-  title: "REST API Project",
-  functionalityScore: 85,
-  codeQualityScrore: 90,
+id: "LAB-001",
+kind: "lab",
+title: "REST API Project",
+functionalityScore: 85,
+codeQualityScore: 90,
 };
+console.log(`Quiz grade: ${calculateGrade(quiz)}%`); // 80
+console.log(`Lab grade: ${calculateGrade(lab)}%`); // 87
 
-console.log(`Quiz grade:${calculateGrade(quiz)}%`);
-console.log(`Lab grade:${calculateGrade(lab)}%`);
 
-// quiz.id = "QUIZ-999";
 
 const pending: EnrollmentStatus = {
-  status: "PENDING",
-  requestedAt: Temporal.Now.instant(),
-  studentId: "STU-001",
-  courseId: "CRS-101",
+status: "PENDING",
+requestedAt: Temporal.Now.instant(),
+studentId: "STU-001",
+courseId: "CRS-101",
 };
-
 console.log(describeEnrollment(pending));
 
+
 const webDev: CourseStatus = {
-  status: "ACTIVE",
-  enrolledCount: 28,
-  startDate: Temporal.PlainDate.from("2026-09-01"),
+status: "ACTIVE",
+enrolledCount: 28,
+startDate: Temporal.PlainDate.from("2026-09-01"),
 };
 
 console.log(describeCourse(webDev));
+
+
+const approvedAt = Temporal.Now.instant();
+console.log(`Approved at (UTC): ${approvedAt}`);
+
+const addisTime = approvedAt.toZonedDateTimeISO("Africa/Addis_Ababa");
+const londonTime = approvedAt.toZonedDateTimeISO("Europe/London");
+console.log(`Addis: ${addisTime.toPlainTime()}`);
+console.log(`London: ${londonTime.toPlainTime()}`);
+
+const courseStart = Temporal.PlainDate.from("2026-09-01");
+const today = Temporal.Now.plainDateISO();
+const daysUntilStart = today.until(courseStart).total({ unit: "days" });
+console.log(`${Math.floor(daysUntilStart)} days until course starts`);
+
+const deadline = Temporal.PlainDate.from("2026-12-15");
+const remaining = today.until(deadline);
+console.log(
+`${remaining.total({ unit: "days" })} days until assignment is due`,
+);
