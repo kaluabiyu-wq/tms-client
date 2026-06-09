@@ -27,10 +27,10 @@ function processStudent(raw: unknown) {
   }
 }
 
-// processStudent({ id: "STU-001", name: "Hana", gpa: 3.7 });
+ processStudent({ id: "STU-001", name: "Hana", gpa: 3.7 });
 
-// processStudent(42);
+ processStudent(42);
 
-// console.log(parseStudent({ id: "STU-001", name: "Hana" }));
+ console.log(parseStudent({ id: "STU-001", name: "Hana" }));
 
-// parseStudent({ id: 42, name: "Test" });
+parseStudent({ id: 42, name: "Test" });
