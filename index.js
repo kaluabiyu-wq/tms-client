@@ -24,20 +24,3 @@ processStudent({ id: "STU-001", name: "Hana", gpa: 3.7 });
 processStudent(42);
 console.log(parseStudent({ id: "STU-001", name: "Hana" }));
 parseStudent({ id: 42, name: "Test" });
-const quiz = {
-    id: "QUIZ-001",
-    kind: "quiz",
-    title: "SQL Basics",
-    correctAnswers: 8,
-    totalQuestions: 10,
-};
-const lab = {
-    id: "LAB-001",
-    kind: "lab",
-    title: "REST API Project",
-    functionalityScore: 85,
-    codeQualityScrore: 90,
-};
-console.log(`Quiz grade:${calculateGrade(quiz)}%`);
-console.log(`Lab grade:${calculateGrade(lab)}%`);
-//quiz.id ="QUIZ-999"
